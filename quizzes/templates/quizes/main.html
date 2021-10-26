@@ -1,0 +1,111 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        
+    <!-- jquery -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+
+    <!-- Bootstrap CSS & JS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- custom css & js-->
+    <link rel="stylesheet" href="{% static 'quizes/style.css' %}">
+    <script src="{% static 'quizes/main.js' %}" defer></script>
+
+    <title>quiz app | home</title>
+  </head>
+  <body>
+    <div class="container mt-3">
+        <!-- Modal -->
+  <!-- <div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Start?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body-confirm">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Retour</button>
+          <button type="button" id="start-button" class="btn btn-success">Commencer</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="h1">Quiz List
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end p-3">
+      <a href="{% url 'deconnexion' %}" type="button" class="btn btn-outline-danger fs-4">Déconnexion</a>
+    </div>
+  </div>
+  <hr>
+  <!-- {% for obj in object_list %}
+    <button
+        class="btn btn-link modal-button"
+        data-pk="{{obj.pk}}"
+        data-quiz="{{obj.name}}"
+        data-questions="{{obj.number_of_questions}}"
+        data-difficulty="{{obj.difficulty}}"
+        data-time="{{obj.time}}"
+        data-pass="{{obj.required_score_to_pass}}"
+        data-toggle="modal"
+        data-bs-target="#quizStartModal">
+        {{obj.name}}
+    </button><br>
+   {% endfor %} -->
+    </div>
+    {% for obj in object_list %}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      {{obj.name}}
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="h5 mb-3">Rangel téré yi niou commencer saytou:"<b>{{obj.name}}</b>"?</div>
+              <div class="text-muted">
+                  <ul>
+                      <li>difficulty: <b>{{obj.difficulty}}</b></li>
+                      <li>nombre de questions: <b>{{obj.number_of_questions}}</b></li>
+                      <li>score pour passer: <b>{{obj.required_score_to_pass}}%</b></li>
+                      <li>temps: <b>{{obj.time}} minutes</b></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="start-button">Start ?</button>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      const pk = {{ obj.pk }}
+    </script>
+    {% endfor %}
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  </body>
+  </body>
+</html>
+
+

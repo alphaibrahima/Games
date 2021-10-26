@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Connexion</title>
+
+  <!-- Bootstrap CSS  -->
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <!-- bootstrap JS  -->
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  
+</head>
+
+<body id="page-top" style="background-color: #001f3f;">
+
+              <div class="container">
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                      <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                          <div class="col-lg-5 d-none d-lg-block bg-register-image ">
+                            <div class="text-center p-5">
+                                <!-- <h1 class="h4 text-gray-900 mb-4">Connexion</h1> -->
+                                <h3 class="h3 text-gray-900 mb-4">Bienvenue sur notre Plateforme de Jeux, <h1>Miraland</h1> Amusez-vous bien !</h3>
+                            </div>
+                              <!-- Bienvenue sur notre Plateforme de Jeux, <h3>Miraland</h3>. <br> Amusez-vous bien ! -->
+                          </div>
+                          <div class="col-lg-7">
+                            <div class="p-5">
+                              <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Connexion</h1>
+                              </div>
+                
+                              {% if user.is_authenticated %}
+                                <h3>Vous êtes connecté, {{ user.username }} !</h3>
+                                <div class="text-center">
+                                    <a class="small" href="{% url 'accueil' %}">Dirigez-vous vers l'accueil</a>
+                                </div>
+                            {% else %}
+                              <form method="POST" class="user">
+                                  {% csrf_token %}
+                                  {{ form.as_p }}
+                                  <button type="submit" class="btn btn-primary btn-user btn-block">Se connecter</button>
+                              </form>
+                              <hr>
+                              <div class="text-center">
+                                <a class="small" href="forgot-password.html">Mot-de-passe oublié?</a>
+                              </div>
+                              <div class="text-center">
+                                <a class="small" href="{% url 'inscription' %}">Vous n'avez pas encore de compte ? Inscrivez-vous vite !</a>
+                            </div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                
+                  </div>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+/node_modules
+/myvenv
+*.log
+*.pot
+*.pyc
+__pycache__/
+static/

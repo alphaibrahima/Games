@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static%}
+<html>
+<head>
+
+    {% block meta %}
+    {% endblock meta %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" href="{% static '' %}">
+    
+    <title>Miraland {% block title %} {% endblock title %}</title>
+
+    <script>
+        var URL = "{% url 'score_update' %}";
+        var URL_feedback = "{% url 'add_feedback' %}";
+    </script>
+
+    {% block css %}
+    {% endblock css %}
+</head>
+
+<body style="background-color: #001f3f">
+
+
+    {% comment %} Username {% endcomment %}
+        <h1 id="username" class="text-center text-white" ">
+            {{ user.username }}
+        </h1>
+
+        {% comment %} The first row {% endcomment %}
+        <div class="row">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start p-3 col-2">
+                <a href="{% url 'proposition_mdp' %}" type="button" class="btn btn-outline-success fs-4 text-white">Propose-moi</a>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end p-3 col-4">
+                <a class="btn btn-outline-secondary fs-4 text-white" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Feedback ?</a>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start p-3 col-4">
+                <a class="btn btn-outline-secondary fs-4 text-white" href="{% url 'accueil' %}" role="button">Accueil</a>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start p-3 col-4">
+                <a class="btn btn-outline-secondary fs-4 text-white" href="{% url 'show' %}" role="button">Invitations</a>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end p-3 col-2">
+                    <a href="{% url 'deconnexion' %}" type="button" class="btn btn-outline-danger fs-4 text-white">Déconnexion</a>
+                </div>
+            {% else %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end p-3 col-2">
+                    <a href="{% url 'connexion' %}" type="button" class="btn btn-outline-primary fs-4 text-white">Connexion</a>
+                </div>
+            {% endif %}
+        </div>
+        {% comment %} The End first row {% endcomment %}
+
+
+        <!-- Modal for feedbacks  -->
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">Feedback</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Aidez-nous à nous améliorer en donnant un feedback...
+                    </p>
+
+                    <div class="mb-3">
+                        <!-- <label for="message-text" class="col-form-label">Message:</label> -->
+                        <textarea class="form-control" id="feedback"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button class="btn btn-primary" id="submitFeedback" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Envoyer</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {% comment %} Message of thanks {% endcomment %}
+          <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel2">Merci beaucoup</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Nous vous remercions pour votre aide précieuse. 
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-dismiss="modal">Revenir au jeu</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal feedbacks  -->
+
+
+
+
+      
+
+
+
+    <!-- Pour le contenu -->
+    {% block content %}
+    
+    {% endblock content %}
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script> 
+    <!-- Mes scripts -->
+    {% block script %}  
+    {% endblock script %}
+
+</body>
+</html> 

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load static %} 
+
+{% block title %} 
+    Mode 1 vs 1
+{% endblock title %}
+
+{% comment %} Block for CSS {% endcomment %}
+{% block css %}
+{% endblock css %}
+
+
+{% comment %} Block for content {% endcomment %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    {% for inv in invits  %}
+                    {% comment %} {% if request.user == inv.user2 %} {% endcomment %}
+                    <p>
+                        <a href="{% url 'accept'  inv.id%}">
+                            {{ inv.user1 }} vous vous invite à jouer avec lui 😎🤩
+                        </a>
+                    </p>
+                    {% comment %} {% endif %} {% endcomment %}
+                    {% empty %}
+                    <div class="text-center my-4">
+                        <i class="fa fa-battery-empty fa-5x mt-4" aria-hidden="true"></i>
+                        <h3>Pas d'invitation </h3>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% comment %} Block the JS files  {% endcomment %}
+<!-- <script src="{% static 'js/script.js' %}"></script>  -->
+{% block script %}
+{% endblock script %}

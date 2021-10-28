@@ -20,7 +20,13 @@ urlpatterns = [
     path('scores', views.scores_view, name='scores_mdp'),
     path('test', views.score_update, name='score_update'),
     path('proposition_mdp', views.proposition, name='proposition_mdp'),
-    path('add_feedback', views.add_feedback, name='add_feedback')
+    path('add_feedback', views.add_feedback, name='add_feedback'),
+
+    # mode un contre un
+    path('modeun', views.modeOne, name='modeun'),
+    path('invite/<int:id>/', views.Invit, name = 'invit' ),
+    path('show', views.ShowInvi, name = 'show'),
+    path('show/<int:id>/', views.AccpetInv, name = 'accept'),
 
     
 ]

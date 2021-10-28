@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% load static %} 
+
+{% block title %} 
+    Mode 1 vs 1
+{% endblock title %}
+
+{% comment %} Block for CSS {% endcomment %}
+{% block css %}
+{% endblock css %}
+
+
+{% comment %} Block for content {% endcomment %}
+{% block content %}
+
+<h1 class="text-white text-center">
+    Mode Un Vs Un
+</h1>
+<div class="row">
+    <div class="col-md-4">
+        <!-- <select class="form-select form-select-lg mb-3"> -->
+            {% for i in users  %}
+                <!-- <option value="{{ i.id }}"> -->
+                    <p>
+                        <a id="" href="{% url 'invit'  i.id%}" class="text-white">
+                            {{ i.username }}
+                        </a>
+                    </p>
+                <!-- </option> -->
+:            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 bg-info">
+            Partie Reponse
+        </div>
+
+        <div class="col-md-5 offset-md-2 bg-danger">
+            Partie Questions
+            <div class="row">
+                <div class="col-5" id="icons">
+                    <p id="msgFinal" class="text-white">
+                    </p>
+                </div>
+
+                <h3 class="col-7 text-end text-white">
+                    Tentative n°<span id="tentative"></span>
+                </h3>
+        </div>
+
+
+        <div style="background-color: #a4b0be; height: 90%;">
+            <div class="position-relative top-50 start-50 translate-middle">
+                <p class="text-center fs-1 " id="indice" style="color: white;"> 
+                </p>
+            </div>
+            
+        </div>
+
+        <div>
+            <button type="button " class="btn btn-success" onclick="reinit()" >
+                Rejouer ?
+            </button>
+            <a class="btn btn-primary" href="{% url 'scores_mdp' %}" style="background-color: #DDDDDD; color: black;">
+                Scores
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% comment %} Block the JS files  {% endcomment %}
+<!-- <script src="{% static 'js/script.js' %}"></script>  -->
+{% block script %}
+{% endblock script %}

@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Feedback, Mots, Score
+from django.contrib.auth.models import User
+from django.contrib import messages
+
+
+from .models import Feedback, Mots, Score, UnContreUn
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -83,3 +87,43 @@ def proposition(request):
         form = PropositionForm()
 
         return render(request, 'proposition_mdp.html', locals())
+
+
+
+def Invit(request, id):
+    userId = User.objects.get(id = id)
+    print(userId)
+    connected_user = request.user
+    print(connected_user)
+
+    UnContreUn.objects.create(user1 = connected_user, user2 = userId)
+    messages.add_message(request, messages.INFO, f" Patientez que  {userId} accepte l'invitation ")
+    return redirect('mot_de_passe')
+
+    # return render(request, 'invite.html', locals())
+
+
+def ShowInvi(request):
+    invits = UnContreUn.objects.filter(is_accept = False, user2 = request.user)
+    return render(request, 'invite.html', locals())
+
+def AccpetInv(request, id):
+    mode = UnContreUn.objects.get(id = id)
+    print(mode)
+
+    if mode.is_accept == False:
+        mode.is_accept = True
+        mode.save()
+        messages.add_message(request, messages.SUCCESS, f" Que le meilleur gagne ")
+
+    
+    return redirect('mot_de_passe')
+
+def modeOne(request):
+    users = User.objects.all()
+    return render(request, 'modeUn.html', locals())
+
+
+
+
+

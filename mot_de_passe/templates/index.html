@@ -44,6 +44,7 @@
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-start p-3 col-4">
+                <a class="btn btn-outline-secondary fs-4 text-white" href="{% url 'modeun' %}" role="button">Inviter</a>
                 <a class="btn btn-outline-secondary fs-4 text-white" href="{% url 'show' %}" role="button">Invitations</a>
             </div>
 
@@ -114,7 +115,7 @@
 
         {% comment %} Message {% endcomment %}
           {% if messages %}
-            {%for message in messages%}
+            {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible alert-sm fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         {% comment %} <span aria-hidden="true">&times;</span> {% endcomment %}
@@ -269,6 +270,7 @@
       </div>
 
 
+
 {% comment %} JavaScript  {% endcomment %}
     <script>
         window.addEventListener('beforeunload', function(e) {
@@ -318,9 +320,7 @@
                 
                 
             })
-
-            
-            
+          
             p3.then((new_liste) =>{
                 liste=new_liste
                 init(new_liste)
@@ -328,6 +328,7 @@
             })
 
         };
+
 
 
         const btn_feedback = document.querySelector('#submitFeedback');

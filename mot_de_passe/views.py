@@ -20,11 +20,14 @@ def mot_de_passe(request):
     # print(list(liste_mots)[0]['id'])
     return render(request, 'index.html', locals())
 
+
+
 # @login_required
 def scores_view(request):
     scores = Score.objects.all().order_by('-points')
     # print(list(liste_mots)[0]['id'])
     return render(request, 'score.html', locals())
+
 
 
 @csrf_exempt
@@ -90,6 +93,8 @@ def proposition(request):
 
 
 
+
+
 def Invit(request, id):
     userId = User.objects.get(id = id)
     print(userId)
@@ -97,8 +102,8 @@ def Invit(request, id):
     print(connected_user)
 
     UnContreUn.objects.create(user1 = connected_user, user2 = userId)
-    messages.add_message(request, messages.INFO, f" Patientez que  {userId} accepte l'invitation ")
-    return redirect('mot_de_passe')
+    messages.add_message(request, messages.SUCCESS, f" Patientez que  {userId} accepte l'invitation ")
+    return redirect('1vs1')
 
     # return render(request, 'invite.html', locals())
 
@@ -106,6 +111,7 @@ def Invit(request, id):
 def ShowInvi(request):
     invits = UnContreUn.objects.filter(is_accept = False, user2 = request.user)
     return render(request, 'invite.html', locals())
+
 
 def AccpetInv(request, id):
     mode = UnContreUn.objects.get(id = id)
@@ -115,13 +121,22 @@ def AccpetInv(request, id):
         mode.is_accept = True
         mode.save()
         messages.add_message(request, messages.SUCCESS, f" Que le meilleur gagne ")
+    return redirect('1vs1')
 
-    
-    return redirect('mot_de_passe')
+
+
+
 
 def modeOne(request):
     users = User.objects.all()
     return render(request, 'modeUn.html', locals())
+
+
+def jeu1vs1(request):
+    liste_mots = list(Mots.objects.all().values())
+    themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+    difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+    return render(request, 'jeu1vs1.html', locals())
 
 
 

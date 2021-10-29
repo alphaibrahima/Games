@@ -27,6 +27,7 @@ urlpatterns = [
     path('invite/<int:id>/', views.Invit, name = 'invit' ),
     path('show', views.ShowInvi, name = 'show'),
     path('show/<int:id>/', views.AccpetInv, name = 'accept'),
+    path('1vs1/', views.jeu1vs1, name='1vs1')
 
     
 ]

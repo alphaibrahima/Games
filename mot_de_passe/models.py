@@ -33,6 +33,8 @@ class Score(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now)
 
 
+
+
 class Feedback(models.Model):
     feedback = models.CharField(max_length=500)
     date = models.DateTimeField(default=datetime.datetime.now)

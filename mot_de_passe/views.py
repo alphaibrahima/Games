@@ -24,7 +24,12 @@ def mot_de_passe(request):
 
 # @login_required
 def scores_view(request):
+    user = request.user
+    # print(user.id)
+    userId = Score.objects.filter(username = user).order_by('-date')
     scores = Score.objects.all().order_by('-points')
+    scoresauth = Score.objects.all().order_by('username').distinct('username')
+    
     # print(list(liste_mots)[0]['id'])
     return render(request, 'score.html', locals())
 

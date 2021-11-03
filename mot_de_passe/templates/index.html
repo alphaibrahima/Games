@@ -107,6 +107,9 @@
           </div>
           <!-- End Modal feedbacks  -->
 
+        {% comment %} timer {% endcomment %}
+          <div id="timer" class="h1 text-white text-center"></div>
+        {% comment %} timer {% endcomment %}
 
         <h1 class="row justify-content-center p-5 text-center" style="color: white;">
           Je te défie de trouver le mot-de-passe !!!
@@ -346,9 +349,14 @@
             return new_liste;
         }
 
+
+
+
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script> 
+    <script src="{% static 'js/timer.js' %}"></script> 
 
 
 

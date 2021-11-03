@@ -1,4 +1,161 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% load static %} 
+
+{% block title %} 
+    Score
+{% endblock title %}
+
+{% comment %} Block for CSS {% endcomment %}
+{% block css %}
+{% endblock css %}
+
+
+{% comment %} Block for content {% endcomment %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-3 pb-2"></div>
+
+    <div class="col-12 col-md-6 pb-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="media d-flex justify-content-around">
+
+            <div class="media-body ">
+              {% for use in userId|slice:":1"  %}
+              <h3 class="danger">{{ use.points }}</h3>
+              <span> {{ use.username }} </span>
+              {% endfor %}
+            </div>
+
+            <div class="align-self-center  ">
+              <i class="fa fa-trophy fa-3x text-right" aria-hidden="true" style="color: #0D6EFD;"></i>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3 pb-2"></div>
+  </div>
+  <div class="row">
+    <!-- score for users online -->
+    <div class="col-12 col-md-4 pb-2">
+      <div class="card">
+        <div class="card-header ">
+          <h5 class="card-title text-center">
+            <i class="fa fa-flask fa-1x " aria-hidden="true"></i>
+                Score 
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+
+              <thead class="" style="background-color:#0D6EFD; color:#fff;">
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">Joueurs</th>
+                  <th scope="col">Scores</th>
+                  <th scope="col">Dates</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for use in scoresauth|dictsort:"date" %}
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{{ use.username }}</td>
+                  <td>{{ use.points }}</td>
+                  <td class="text-muted" style="font-size: 13px;">il ya {{ use.date|timesince }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- score for all users  -->
+    <div class="col-12 col-md-8 pb-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-center">
+             Score 
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+
+              <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Joueurs
+                  </th>
+                  <th scope="col">
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                    Scores
+                  </th>
+                  <th scope="col">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    Dates
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for score in scores %}
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{{ score.username }}</td>
+                  <td>{{ score.points }}</td>
+                  <td>{{ score.date|timesince }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% comment %} Block the JS files  {% endcomment %}
+<!-- <script src="{% static 'js/script.js' %}"></script>  -->
+{% block script %}
+
+
+    <script>
+      const btn_feedback = document.querySelector('#submitFeedback');
+      var feedback
+      btn_feedback.onclick = (event) => {
+          feedback = document.querySelector('#feedback').value;
+          addFeedback()
+      };
+    </script>
+
+
+{% endblock script %}
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -126,4 +283,4 @@
       };
     </script>
 </body>
-</html>
+</html> {% endcomment %}

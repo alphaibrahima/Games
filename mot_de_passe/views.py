@@ -3,11 +3,16 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 
+
 from .models import Feedback, Mots, Score, UnContreUn
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import PropositionForm
+
+#API
+from rest_framework import viewsets
+from .serializers import MotsSerializer
 
 
 # Create your views here.
@@ -142,6 +147,13 @@ def jeu1vs1(request):
     themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
     difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
     return render(request, 'jeu1vs1.html', locals())
+
+
+
+# conf API
+class MotsViewSet(viewsets.ModelViewSet):
+    queryset = Mots.objects.all().order_by('theme')
+    serializer_class = MotsSerializer
 
 
 

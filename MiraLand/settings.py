@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'accueil',
     'quizzes',
     'django_extensions'
+    'rest_framework',
     # 'whitenoise.runserver_nostatic',
 ]
 

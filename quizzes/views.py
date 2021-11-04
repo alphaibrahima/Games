@@ -86,3 +86,12 @@ def save_quiz_view(request, pk):
             return JsonResponse({'passed': True, 'score': score_ ,'results':results })
         else:
             return JsonResponse({'passed': False,'results':results, 'score': score_ })
+
+
+def Score(request):
+    user = request.user
+    # print(user.id)
+    userId = Result.objects.filter(user = user).order_by('-score')
+    scores = Result.objects.all().order_by('-score')
+    scoresauth = Result.objects.all().order_by('user').distinct('user')
+    return render(request, 'score.html', locals())

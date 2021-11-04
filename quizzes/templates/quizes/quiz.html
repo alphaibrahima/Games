@@ -19,7 +19,11 @@
     <!-- custom css & js-->
     <link rel="stylesheet" href="{% static 'quizes/style.css' %}">
     
-    <script src="{% static 'quizes/quiz.js' %}" defer></script>
+    {% comment %} <script src="{% static 'quizes/quiz.js' %}" defer></script> {% endcomment %}
+    
+    <script src="{% static 'quizes/main.js' %}" defer></script> 
+    
+
 
     <title>quiz app| {{obj.name}}</title>
   </head>

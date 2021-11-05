@@ -18,7 +18,7 @@
 
 <body >
 
-<div class="container">
+<div class="container mt-4">
     <div class="row">
         <div class="col-12 col-md-3 pb-2"></div>
     
@@ -28,10 +28,10 @@
               <div class="media d-flex justify-content-around">
     
                 <div class="media-body ">
-                  <!-- {% for use in userId|slice:":1"  %} -->
-                  <h3 class="danger"> use.points </h3>
-                  <span>  use.username  </span>
-                  <!-- {% endfor %} -->
+                  {% for use in userId|slice:":1"  %}
+                  <h3 class="danger"> {{use.score|floatformat:1 }}% </h3>
+                  <span>  {{use.user}}  </span>
+                  {% endfor %}
                 </div>
     
                 <div class="align-self-center  ">
@@ -52,7 +52,7 @@
             <div class="card-header ">
               <h5 class="card-title text-center">
                 <i class="fa fa-flask fa-1x " aria-hidden="true"></i>
-                    Score 
+                    Vos Scores
               </h5>
             </div>
             <div class="card-body">
@@ -64,18 +64,19 @@
                       <th scope="col">N°</th>
                       <th scope="col">Joueurs</th>
                       <th scope="col">Scores</th>
-                      <th scope="col">Dates</th>
+                      <!-- <th scope="col">Dates</th> -->
                     </tr>
                   </thead>
     
                   <tbody>
-                    
+                    {% for use in userId  %}
                     <tr>
-                      <th scope="row">1</th>
-                      <td> use.username </td>
-                      <td> use.points </td>
-                      <td class="text-muted" style="font-size: 13px;">il ya </td>
+                      <th scope="row">{{use.id}}</th>
+                      <td> {{use.user}} </td>
+                      <td> {{use.score|floatformat:1 }} %</td>
+                      <!-- <td class="text-muted" style="font-size: 13px;">il ya </td> -->
                     </tr>
+                    {% endfor %}
                    
                   </tbody>
     
@@ -91,7 +92,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title text-center">
-                 Score 
+                 Quiz'dine 
               </h3>
             </div>
             <div class="card-body">
@@ -109,22 +110,22 @@
                         <i class="fa fa-trophy" aria-hidden="true"></i>
                         Scores
                       </th>
-                      <th scope="col">
+                      <!-- <th scope="col">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         Dates
-                      </th>
+                      </th> -->
                     </tr>
                   </thead>
     
                   <tbody>
-                    <!-- {% for score in scores %} -->
+                    {% for score in scoresauth %}
                     <tr>
-                      <th scope="row">1</th>
-                      <td> score.username </td>
-                      <td> score.points </td>
-                      <td> score.date|timesince </td>
+                      <th scope="row">{{score.id}}</th>
+                      <td> {{score.user}} </td>
+                      <td> {{score.score|floatformat:1}} %</td>
+                      <!-- <td> {{score.date|timesince}} </td> -->
                     </tr>
-                    <!-- {% endfor %} -->
+                    {% endfor %}
                   </tbody>
     
                 </table>

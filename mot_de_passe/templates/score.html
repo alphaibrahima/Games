@@ -67,7 +67,7 @@
               <tbody>
                 {% for use in scoresauth|dictsort:"date" %}
                 <tr>
-                  <th scope="row">1</th>
+                  <th scope="row">{{ use.id }}</th>
                   <td>{{ use.username }}</td>
                   <td>{{ use.points }}</td>
                   <td class="text-muted" style="font-size: 13px;">il ya {{ use.date|timesince }}</td>
@@ -106,17 +106,17 @@
                     Scores
                   </th>
                   <th scope="col">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                     <i class="fa fa-calendar" aria-hidden="true"></i>
                     Dates
-                  </th>
+                  </th> 
                 </tr>
               </thead>
 
               <tbody>
-                {% for score in scores %}
+                {% for score in scoresauth %}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>{{ score.username }}</td>
+                  <th scope="row">{{ use.id }}</th>
+                  <td>{{ score.user }}</td>
                   <td>{{ score.points }}</td>
                   <td>{{ score.date|timesince }}</td>
                 </tr>

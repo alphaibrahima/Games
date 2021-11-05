@@ -8,7 +8,7 @@ from . import models
 # Reorganisation du tableau d'administration des posts
 @admin.register(models.UnContreUn)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('user1', 'user2', 'is_accept', 'timestamp')
+    list_display = ('id','user1', 'user2', 'is_accept', 'timestamp')
     # prepopulated_fields = {
     #     "slug" : ("title",),
     # }

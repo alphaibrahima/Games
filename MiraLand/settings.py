@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'mot_de_passe',
     'accueil',
     'quizzes',
-    'django_extensions'
+    'django_extensions',
     'rest_framework',
     # 'whitenoise.runserver_nostatic',
 ]

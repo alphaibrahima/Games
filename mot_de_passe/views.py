@@ -1,10 +1,11 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 
 
 
-from .models import Feedback, Mots, Score, UnContreUn
+from .models import Feedback, Mots, Score, UnContreUn, ScoreTwo
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -12,7 +13,9 @@ from .forms import PropositionForm
 
 #API
 from rest_framework import viewsets
-from .serializers import MotsSerializer
+from .serializers import ( MotsSerializer, ScoreSerializer, FeedbackSerializer,
+                           UnContreUnSerializer, ScoreTwoSerializer
+                        )
 
 
 # Create your views here.
@@ -150,12 +153,34 @@ def jeu1vs1(request):
 
 
 
-# conf API
+# conf API Model Mots
 class MotsViewSet(viewsets.ModelViewSet):
     queryset = Mots.objects.all().order_by('theme')
     serializer_class = MotsSerializer
 
 
+# conf API Model Score
+class ScoreViewSet(viewsets.ModelViewSet):
+    queryset = Score.objects.all().order_by('-date')
+    serializer_class = ScoreSerializer
 
+
+# conf API Model Feedback
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all().order_by('-date')
+    serializer_class = FeedbackSerializer
+
+
+# conf API Model UncontreUn
+class ContreUnViewSet(viewsets.ModelViewSet):
+    queryset = UnContreUn.objects.all().order_by('timestamp')
+    serializer_class = UnContreUnSerializer
+
+
+
+# API Model scoreTwo pour le score un contre un
+class ScoreTwoViewSet(viewsets.ModelViewSet):
+    queryset = ScoreTwo.objects.all().order_by('date')
+    serializer_class = ScoreTwoSerializer
 
 

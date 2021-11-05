@@ -27,6 +27,9 @@ class Mots(models.Model):
     # surface = models.IntegerField(blank=True, null=True)
     # chambre = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.mot } "
+
 class Score(models.Model):
     username = models.CharField(max_length=100)
     points = models.IntegerField()

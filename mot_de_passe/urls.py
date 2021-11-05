@@ -1,11 +1,15 @@
 
 from mot_de_passe import views
 from django.urls import include, path
-from rest_framework import routers
+from rest_framework import routers, viewsets
 
 # API Django Rest
 router = routers.DefaultRouter()
 router.register(r'mots', views.MotsViewSet)
+router.register(r'scoresapi', views.ScoreViewSet)
+router.register(r'feedback', views.FeedbackViewSet)
+router.register(r'contreun', views.ContreUnViewSet)
+router.register(r'scoreun', views.ScoreTwoViewSet)
 
 urlpatterns = [
     path('', views.mot_de_passe, name='mot_de_passe'),

@@ -92,6 +92,7 @@ def Score(request):
     user = request.user
     # print(user.id)
     userId = Result.objects.filter(user = user).order_by('-score')
+    # userIdd = Result.objects.filter(user = user).order_by('-date')
     scores = Result.objects.all().order_by('-score')
     scoresauth = Result.objects.all().order_by('user').distinct('user')
-    return render(request, 'score.html', locals())
+    return render(request, 'quizes/score.html', locals())

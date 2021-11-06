@@ -22,7 +22,7 @@
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible alert-sm fade show" role="alert">
-                        <div class="text-center font-weight-bold">{{ message }}</div>
+                        <div class="text-center font-weight-bold" id="msg">{{ message }}</div>
                     </div>
                 {% endfor %}
             {% endif %}

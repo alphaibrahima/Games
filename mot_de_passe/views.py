@@ -8,7 +8,7 @@ from django.contrib import messages
 from .models import Feedback, Mots, Score, UnContreUn, ScoreTwo
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import PropositionForm
 
 #API

@@ -146,10 +146,23 @@ def modeOne(request):
 
 
 def jeu1vs1(request):
+    # liste_mots = list(Mots.objects.all().values())
+    # themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+    # difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+    return render(request, 'jeu1vs1.html')
+
+def jeu1Sall(request):
     liste_mots = list(Mots.objects.all().values())
     themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
     difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
-    return render(request, 'jeu1vs1.html', locals())
+
+    # context = {
+    #     "liste_mots"    : liste_mots,
+    #     "themes"        : themes,
+    #     "difficultes"   : difficultes
+
+    # }
+    return JsonResponse({"liste_mots" : list(liste_mots.values())})
 
 
 

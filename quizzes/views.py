@@ -10,7 +10,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
+
+
+#API
+from rest_framework import viewsets
+from .serializers import ( QuizSerializer, QuestionSerializer, AnswerSerializer,
+                           ResultSerializer,
+                        )
+
+
+
 
 
 class QuizListView(LoginRequiredMixin, ListView,):
@@ -96,3 +105,36 @@ def Score(request):
     scores = Result.objects.all().order_by('-score')
     scoresauth = Result.objects.all().order_by('user').distinct('user')
     return render(request, 'quizes/score.html', locals())
+
+
+
+
+
+
+# conf API Model Quiz
+class QuizViewSet(viewsets.ModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+
+
+# conf API Model Question
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all().order_by('-created')
+    serializer_class = QuestionSerializer
+
+
+
+# conf API Model Answer
+class AnswerViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all().order_by('-created')
+    serializer_class = AnswerSerializer
+
+
+
+# conf API Model Answer
+class ResultViewSet(viewsets.ModelViewSet):
+    queryset = Result.objects.all().order_by('score')
+    serializer_class = ResultSerializer
+
+
+

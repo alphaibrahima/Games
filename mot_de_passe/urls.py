@@ -18,13 +18,21 @@ urlpatterns = [
     path('proposition_mdp', views.proposition, name='proposition_mdp'),
     path('add_feedback', views.add_feedback, name='add_feedback'),
 
-    # mode un contre un
+    # mode un contre un la page pour inviter
     path('modeun', views.modeOne, name='modeun'),
+
     path('invite/<int:id>/', views.Invit, name = 'invit' ),
+
+    # affichage des invitations
     path('show', views.ShowInvi, name = 'show'),
+    
+    #traitement de l'invitation 
     path('show/<int:id>/', views.AccpetInv, name = 'accept'),
+
     path('1vs1/', views.jeu1vs1, name='1vs1'),
-    path('jeu1Sall/', views.jeu1vs1, name='jeu1Sall'),
+
+    
+    path('jeu1Sall/<int:id>', views.jeu1Sall.as_view(), name='jeu1Sall'),
 
     # API Django Rest
     path('', include(router.urls)),

@@ -2,6 +2,7 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views.generic.base import View
 
 
 
@@ -107,7 +108,7 @@ def proposition(request):
 
 
 
-
+# creation de l'invitation
 def Invit(request, id):
     userId = User.objects.get(id = id)
     print(userId)
@@ -121,11 +122,13 @@ def Invit(request, id):
     # return render(request, 'invite.html', locals())
 
 
+# affichage des invitations
 def ShowInvi(request):
     invits = UnContreUn.objects.filter(is_accept = False, user2 = request.user)
     return render(request, 'invite.html', locals())
 
 
+#traitement de l'invitation 
 def AccpetInv(request, id):
     mode = UnContreUn.objects.get(id = id)
     print(mode)
@@ -139,7 +142,7 @@ def AccpetInv(request, id):
 
 
 
-
+# la page ou inviter les autres utilisateurs 
 def modeOne(request):
     users = User.objects.all()
     return render(request, 'modeUn.html', locals())
@@ -151,19 +154,41 @@ def jeu1vs1(request):
     # difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
     return render(request, 'jeu1vs1.html')
 
-def jeu1Sall(request):
-    liste_mots = list(Mots.objects.all().values())
-    themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
-    difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+# def jeu1Sall(request):
+#     liste_mots = list(Mots.objects.all().values())
+#     themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+#     difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
 
-    # context = {
-    #     "liste_mots"    : liste_mots,
-    #     "themes"        : themes,
-    #     "difficultes"   : difficultes
+#     # context = {
+#     #     "liste_mots"    : liste_mots,
+#     #     "themes"        : themes,
+#     #     "difficultes"   : difficultes
 
-    # }
-    return JsonResponse({"liste_mots" : list(liste_mots.values())})
+#     # }
+#     return JsonResponse({"liste_mots" : list(liste_mots.values())})
 
+
+
+
+
+
+class jeu1Sall(View):
+    def get(self, request):
+        
+        if request.is_ajax():
+            liste_mots = list(Mots.objects.all().values())
+            themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+            difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+            # maths = UnContreUn.objects.all()
+            maths = list(UnContreUn.objects. filter(is_accept = True, user1 = request.user).values())
+           
+            return JsonResponse({
+                'mots'   :liste_mots,
+                'themes' :themes,
+                'diff'   : difficultes,
+                'equipe' : maths,
+                }, status=200)
+        return render(request, 'jeu1vs1.html')
 
 
 # conf API Model Mots

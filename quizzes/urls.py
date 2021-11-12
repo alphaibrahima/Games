@@ -15,7 +15,7 @@ from .views import(
 )
 # API Django Rest
 router = routers.DefaultRouter()
-router.register(r'quiz', QuizViewSet)
+router.register(r'quizz', QuizViewSet)
 router.register(r'question', QuestionViewSet)
 router.register(r'answer', AnswerViewSet)
 router.register(r'resultat', ResultViewSet)

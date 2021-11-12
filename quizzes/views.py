@@ -29,7 +29,7 @@ class QuizListView(LoginRequiredMixin, ListView,):
 
 @login_required
 def quiz_view(request, pk):
-    quiz = Quiz.objects.get(pk=pk)
+    quiz = Quiz.objects.filter(pk=pk)
     return render(request, 'quizes/quiz.html', {'obj': quiz})
 
 @login_required
@@ -113,7 +113,7 @@ def Score(request):
 
 # conf API Model Quiz
 class QuizViewSet(viewsets.ModelViewSet):
-    queryset = Quiz.objects.all()
+    queryset = Quiz.objects.all().order_by('name')
     serializer_class = QuizSerializer
 
 

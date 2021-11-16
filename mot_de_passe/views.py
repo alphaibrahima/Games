@@ -108,6 +108,13 @@ def proposition(request):
 
 
 
+
+
+# la page ou inviter les autres utilisateurs 
+def modeOne(request):
+    users = User.objects.all()
+    return render(request, 'modeUn.html', locals())
+
 # creation de l'invitation
 def Invit(request, id):
     userId = User.objects.get(id = id)
@@ -131,28 +138,26 @@ def ShowInvi(request):
 #traitement de l'invitation 
 def AccpetInv(request, id):
     mode = UnContreUn.objects.get(id = id)
-    print(mode)
+    print("#############################")
+    print(mode.id)
 
     if mode.is_accept == False:
         mode.is_accept = True
         mode.save()
         messages.add_message(request, messages.SUCCESS, f" Que le meilleur gagne ")
-    return redirect('1vs1')
+    return redirect('jeu1Sall',+mode.id+'/')
 
 
 
 
-# la page ou inviter les autres utilisateurs 
-def modeOne(request):
-    users = User.objects.all()
-    return render(request, 'modeUn.html', locals())
 
 
-def jeu1vs1(request):
-    # liste_mots = list(Mots.objects.all().values())
-    # themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
-    # difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
-    return render(request, 'jeu1vs1.html')
+
+# def jeu1vs1(request):
+#     # liste_mots = list(Mots.objects.all().values())
+#     # themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+#     # difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+#     return render(request, 'jeu1vs1.html')
 
 # def jeu1Sall(request):
 #     liste_mots = list(Mots.objects.all().values())
@@ -173,14 +178,14 @@ def jeu1vs1(request):
 
 
 class jeu1Sall(View):
-    def get(self, request):
+    def get(self, request, id):
         
         if request.is_ajax():
             liste_mots = list(Mots.objects.all().values())
             themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
             difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
             # maths = UnContreUn.objects.all()
-            maths = list(UnContreUn.objects. filter(is_accept = True, user1 = request.user).values())
+            maths = list(UnContreUn.objects. filter(id=id).values())
            
             return JsonResponse({
                 'mots'   :liste_mots,

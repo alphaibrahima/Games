@@ -31,14 +31,27 @@
         <div class="card">
             <div class="card-body">
                 {% for i in users  %}
-                    <div class="d-flex justify-content-around mb-2">
-                        <h4 class="mr-2">
-                            {{ i.username }}
-                        </h4>
-                        <a id="" href="{% url 'invit'  i.id%}" class="btn btn-danger btn-sm mr-4">
-                            Invitez
-                        </a>
-                    </div>
+
+                    {% if i.username == user.username  %}
+                        {% comment %} <div class="d-flex justify-content-around mb-2">
+                            <h4 class="mr-2">
+                                {{ i.username }}
+                            </h4>
+                            <a id="" href="{% url 'invit'  i.id%}" class="btn btn-success btn-sm mr-4">
+                                Invitez
+                            </a>
+                        </div> {% endcomment %}
+                    {% else %}
+                        <div class="d-flex justify-content-around mb-2">
+                            <h4 class="mr-2">
+                                {{ i.username }}
+                            </h4>
+                            <a id="" href="{% url 'invit'  i.id%}" class="btn btn-danger btn-sm mr-4">
+                                Invitez
+                            </a>
+                        </div>
+                    {% endif %}
+
                 {% endfor %}
             </div>
         </div>

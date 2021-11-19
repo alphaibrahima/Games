@@ -48,7 +48,16 @@
                 <a class="nav-link" href="{% url 'modeun' %}">Inviter</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'show' %}">Invitations</a>
+                <a class="nav-link" href="{% url 'show' %}">
+                  Invitations
+                  <i class="fa fa-comments-o" aria-hidden="true"></i>
+                  {% if count_notifications >= 1  %}
+                  <span class="badge bg-danger">
+                    {{ count_notifications }}
+                  </span>
+                  
+                  {% endif %}
+                </a>
               </li>              
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'proposition_mdp' %}">Propose-moi</a>

@@ -16,7 +16,7 @@
 {% block content %}
 
     <div class="container">
-        <div class="row">
+        <div class="row pb-4">
 
             {% comment %} Message {% endcomment %}
             {% if messages %}
@@ -28,20 +28,23 @@
             {% endif %}
 
             {% comment %} fin du message {% endcomment %}
-
+            <div  id="alert-msg" style="width: 80%;">
+                
+            </div>
 
             <div class="col-md-1"></div>
 
             <div class="col-md-10 bg-success">
                 <div class="row">
 
+
                     <div class="col-md-6">
                         <!-- Partie Joueur -->
-                            <h2 class="text-white "> Partie joueur<h2>
+                            {% comment %} <h2 class="text-white "> Partie joueur<h2> {% endcomment %}
                       
                             <div>
                                 <h3 class="text-start text-white">
-                                    Score : <span id="score"></span>
+                                    Joueur 1 : <span id="score1"></span>
                                 </h3>
                             </div>
 
@@ -56,7 +59,7 @@
                                 <input type="text" class="form-control" id="valider" placeholder="Devine-moi..." required >
                             </div>
                             <div id="buttons">
-                                <button type="submit" id="btnSubmit" class="btn btn-primary" onclick="validateForm()" >Valider</button>
+                                <button type="submit" id="btnSubmit" class="btn btn-primary mt-2" onclick="validateForm()" >Valider</button>
                             </div>
 
                         </div>
@@ -64,10 +67,16 @@
 
                     <div class="col-md-6">
                         <!-- Partie Question -->
-                        <h3 class="text-white "> Parti questions </h3>
+                        {% comment %} <h3 class="text-white "> Parti questions </h3> {% endcomment %}
+                                              
+                        <div>
+                            <h3 class="text-start text-white">
+                                Joueur 2 : <span id="score2"></span>
+                            </h3>
+                        </div>
 
 
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="" id="icons">
                                 <p id="msgFinal" class="text-white">
                                 </p>
@@ -77,22 +86,31 @@
                                 Tentative n°<span id="tentative"></span>
                             </h3> 
                     
-                        </div> -->
+                        </div> 
 
                         <div style="background-color: #f0f2f5; height:70%">
                             <div class="d-flex h-100 align-items-center justify-content-center">
                                 <p id="indice" class="text-center fs-1 " style="color:#198754">
-                                     Mafé
+                                     
                                 </p>
                             </div>
                         </div>
+
+                        <div id="btnModal" class="mt-2">
+                            <button type="button " class="btn btn-danger" onclick="reinit()" >Rejouer ?</button>
+
+                            <a class="btn btn-primary" href="{% url 'scores_mdp' %}" style="background-color: #DDDDDD; color: black;">Scores</a>
+
+                            <!-- <a class="btn btn-primary" href="{% url 'proposition_mdp' %}" style="background-color: #DDDDDD; color: black;">Propose ton mdp</a> -->
+                        </div>
+
     
-                         <!-- <div style="background-color: #a4b0be; height: 90%;">
+                        {% comment %} <div style="background-color: #a4b0be; height: 90%;">
                             <div class="position-relative  translate-middle">
                                 <p class="text-center fs-1 " id="indice" style="color: white;"> 
                                 </p>
                             </div>
-                        </div>  -->
+                        </div>   {% endcomment %}
 
                     </div>
 
@@ -105,6 +123,42 @@
     </div>
 
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Thème:</label>
+                  <select class="form-select form-select-lg mb-3" id="theme" aria-label=".form-select-lg example">
+                    {% for i in themes %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Difficulté:</label>
+                  <select class="form-select form-select-lg mb-3" id="difficulte" aria-label=".form-select-lg example">
+                    {% for j in difficultes %}
+                        <option value="{{ j }}">{{ j }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+              <button type="button" id="options" class="btn btn-primary" data-bs-dismiss="modal">Valider</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 {% endblock content %}
 
 {% block script %}
@@ -112,12 +166,69 @@
 
 {% comment %} Block the JS files  {% endcomment %}
 
-     
+    <script>
+        var joueur = '{{user.username}}';
+        var joueurId = '{{request.user.id}}';
+        var inviteur = '{{modeun}}';
+        {% comment %} var invite = '{{modeun.user2}}'; {% endcomment %}
+        {% comment %} console.log(inviteur) {% endcomment %}
+        console.log(joueur)
+        console.log(joueurId)
+        {% comment %} console.log(invite) {% endcomment %}
+
+        let p2 = new Promise((resolve, reject) => {
+            let liste_mots = {{ liste_mots | safe }}
+            console.log(liste_mots)
+            resolve(liste_mots)
+        })
+
+        
+        // Open the modal on the load of the page
+        $(document).ready(function (){
+          $("#exampleModal").modal('show');
+        });
+        
+        var liste;
+        // Getting the theme and the difficulty selected
+        const btn_options = document.querySelector('#options');
+        btn_options.onclick = (event) => {
+            let difficulte = document.querySelector('#difficulte').value;
+            let theme = document.querySelector('#theme').value
+
+            var p3 = new Promise((resolve, reject) => {
+                
+                p2.then((data) =>{
+                    let new_liste = get_theme_difficulty(data, theme, difficulte)
+                    resolve(new_liste)
+                })
+                
+                
+            })
+          
+            p3.then((new_liste) =>{
+                liste=new_liste
+                init(new_liste)
+                // console.log("hey"+new_liste)
+            })
+
+        }
+
+        // Getting the words with the theme and difficulty
+        function get_theme_difficulty(data, theme, difficulte) {
+            let new_liste = data.filter((obj) => obj.theme == theme & obj.difficulte == difficulte)
+
+            return new_liste;
+        }
+        
+
+
+
+
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+     
+    
+    
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="{% static 'js/jeu1vs1.js' %}"></script> 
 
-    <script>
-        let urls = "{% url 'jeu1Sall' %}"
-    </script>
 {% endblock script %}

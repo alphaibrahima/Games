@@ -27,12 +27,14 @@ urlpatterns = [
     path('show', views.ShowInvi, name = 'show'),
     
     #traitement de l'invitation 
-    path('show/<int:id>/', views.AccpetInv, name = 'accept'),
+    path('accep/<int:id>/', views.AccpetInv, name = 'accept'),
+
+    path('sale/<int:id>/', views.Salon, name='salon'),
+
 
     # path('1vs1/', views.jeu1vs1, name='1vs1'),
-
-    
-    path('jeu1Sall/<int:id>/', views.jeu1Sall.as_view(), name='jeu1Sall'),
+    # path('jeu1Sall/', views.jeu1Sall.as_view(), name='jeu1Sall'),
+    # path('jeu1Sall/<int:id>/', views.jeu1Sall.as_view(), name='jeu1Sall'),
 
     # API Django Rest
     path('', include(router.urls)),

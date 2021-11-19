@@ -1,8 +1,9 @@
 from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic.base import View
+from django.http import HttpResponse
 
 
 
@@ -37,6 +38,7 @@ def scores_view(request):
     # print(user.id)
     userId = Score.objects.filter(username = user).order_by('-date')
     scores = Score.objects.all().order_by('-points')
+    scoreb = scores.order_by('username').distinct('username')
     scoresauth = Score.objects.all().order_by('username').distinct('username')
     
     # print(list(liste_mots)[0]['id'])
@@ -115,16 +117,21 @@ def modeOne(request):
     users = User.objects.all()
     return render(request, 'modeUn.html', locals())
 
+
+
 # creation de l'invitation
 def Invit(request, id):
     userId = User.objects.get(id = id)
+    # userId = get_object_or_404(UnContreUn, id=id)
     print(userId)
     connected_user = request.user
     print(connected_user)
 
-    UnContreUn.objects.create(user1 = connected_user, user2 = userId)
+    modeUn = UnContreUn.objects.create(user1 = connected_user, user2 = userId)
+    modeUn.save()
     messages.add_message(request, messages.SUCCESS, f" Patientez que  {userId} accepte l'invitation ")
-    return redirect('1vs1')
+    # return redirect('mot_de_passe')
+    return redirect('/mdp/sale/%d/'%modeUn.id)
 
     # return render(request, 'invite.html', locals())
 
@@ -137,63 +144,84 @@ def ShowInvi(request):
 
 #traitement de l'invitation 
 def AccpetInv(request, id):
-    mode = UnContreUn.objects.get(id = id)
+    # mode = UnContreUn.objects.get(id = id)
+    mode = get_object_or_404(UnContreUn, pk=id)
     print("#############################")
-    print(mode.id)
+    print(mode)
 
     if mode.is_accept == False:
         mode.is_accept = True
         mode.save()
         messages.add_message(request, messages.SUCCESS, f" Que le meilleur gagne ")
-    return redirect('jeu1Sall',+mode.id+'/')
+        return redirect('/mdp/sale/%d/'%id)
+    # return redirect('jeu1Sall')
+    # return redirect('mot_de_passe')
+    return render(request, 'invite.html', locals())
 
 
 
+def Salon(request, id):
+    modeun = UnContreUn.objects.filter(id=id, is_accept = True)
+    liste_mots = list(Mots.objects.all().values())
+    themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+    difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
 
-
-
-
-# def jeu1vs1(request):
-#     # liste_mots = list(Mots.objects.all().values())
-#     # themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
-#     # difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
-#     return render(request, 'jeu1vs1.html')
-
-# def jeu1Sall(request):
-#     liste_mots = list(Mots.objects.all().values())
-#     themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
-#     difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
-
-#     # context = {
-#     #     "liste_mots"    : liste_mots,
-#     #     "themes"        : themes,
-#     #     "difficultes"   : difficultes
-
-#     # }
-#     return JsonResponse({"liste_mots" : list(liste_mots.values())})
-
-
-
-
-
-
-class jeu1Sall(View):
-    def get(self, request, id):
-        
-        if request.is_ajax():
-            liste_mots = list(Mots.objects.all().values())
-            themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
-            difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
-            # maths = UnContreUn.objects.all()
-            maths = list(UnContreUn.objects. filter(id=id).values())
+    if request.is_ajax():
+        liste_mots = list(Mots.objects.all().values())
+        themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+        difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+        # maths = UnContreUn.objects.all()
+        maths = list(UnContreUn.objects. filter(id=id).values())
            
-            return JsonResponse({
-                'mots'   :liste_mots,
-                'themes' :themes,
-                'diff'   : difficultes,
-                'equipe' : maths,
-                }, status=200)
-        return render(request, 'jeu1vs1.html')
+        return JsonResponse({
+            'mots'   :liste_mots,
+            'themes' :themes,
+            'diff'   : difficultes,
+            'equipe' : maths,
+            }, status=200)
+    return render(request, 'jeu1vs1.html', locals())
+
+
+
+
+# for display count of notifications 
+def CountNotifications(request):
+    count_notifications = None
+    if request.user.is_authenticated:
+        count_notifications =  UnContreUn.objects.filter(is_accept = False, user2 = request.user).count()
+    return {'count_notifications': count_notifications}
+
+
+
+# class jeu1Sall(View):
+#     def get(self, request, id):
+        
+#         if request.is_ajax():
+#             liste_mots = list(Mots.objects.all().values())
+#             themes = list(Mots.objects.order_by().values_list('theme', flat=True).distinct())
+#             difficultes = list(Mots.objects.order_by().values_list('difficulte', flat=True).distinct())
+#             # maths = UnContreUn.objects.all()
+#             maths = list(UnContreUn.objects. filter(id=id).values())
+           
+#             return JsonResponse({
+#                 'mots'   :liste_mots,
+#                 'themes' :themes,
+#                 'diff'   : difficultes,
+#                 'equipe' : maths,
+#                 }, status=200)
+                
+#         return render(request, 'jeu1vs1.html')
+
+
+
+
+
+
+
+
+
+
+
 
 
 # conf API Model Mots

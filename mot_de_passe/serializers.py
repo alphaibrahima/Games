@@ -11,7 +11,7 @@ from .models import *
 class MotsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Mots
-        fields = ('mot', 'indice_1', 'indice_2', 'indice_3', 'theme', 'difficulte', 'utilisateur')
+        fields = ('id','mot', 'indice_1', 'indice_2', 'indice_3', 'theme', 'difficulte', 'utilisateur')
 
 
 
@@ -20,7 +20,7 @@ class MotsSerializer(serializers.HyperlinkedModelSerializer):
 class ScoreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Score
-        fields = ('username', 'points', 'date')
+        fields = ('id','username', 'points', 'date')
 
 
 
@@ -29,18 +29,18 @@ class ScoreSerializer(serializers.HyperlinkedModelSerializer):
 class FeedbackSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Feedback
-        fields = ('feedback',  'date')
+        fields = ('id','feedback',  'date')
 
 
 # Serialize model Score un contre un pour les invitations
 class UnContreUnSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnContreUn
-        fields = ('user1', 'user2', 'is_accept', 'timestamp')
+        fields = ('id','user1', 'user2', 'is_accept', 'timestamp')
 
 
 # Serialize model Score un contre un avec les points
 class ScoreTwoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScoreTwo
-        fields = ('user1', 'user2', 'points1', 'points2', 'date')
+        fields = ('id','user1', 'user2', 'points1', 'points2', 'date')

@@ -9,7 +9,7 @@ from .models import *
 class QuizSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Quiz
-        fields = ('name', 'topic', 'number_of_questions', 'time', 'required_score_to_pass', 'difficulty', )
+        fields = ('id','name', 'topic', 'number_of_questions', 'time', 'required_score_to_pass', 'difficulty', )
 
 
 
@@ -19,7 +19,7 @@ class QuizSerializer(serializers.HyperlinkedModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('text', 'quiz', 'created')
+        fields = ('id','text', 'quiz', 'created')
 
 
 
@@ -28,7 +28,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ('text', 'correct', 'question',  'created', )
+        fields = ('id','text', 'correct', 'question',  'created', )
 
 
 
@@ -36,5 +36,5 @@ class AnswerSerializer(serializers.ModelSerializer):
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = ('quiz', 'user', 'score')
+        fields = ('id','quiz', 'user', 'score')
 

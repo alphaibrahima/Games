@@ -71,7 +71,7 @@
                   <tbody>
                     {% for use in userId  %}
                     <tr>
-                      <th scope="row">{{use.id}}</th>
+                      <th scope="row">{{ forloop.counter }}</th>
                       <td> {{use.user}} </td>
                       <td> {{use.score|floatformat:1 }} %</td>
                       <!-- <td class="text-muted" style="font-size: 13px;">il ya </td> -->
@@ -120,7 +120,7 @@
                   <tbody>
                     {% for score in scoresauth %}
                     <tr>
-                      <th scope="row">{{score.id}}</th>
+                      <th scope="row">{{ forloop.counter }}</th>
                       <td> {{score.user}} </td>
                       <td> {{score.score|floatformat:1}} %</td>
                       <!-- <td> {{score.date|timesince}} </td> -->

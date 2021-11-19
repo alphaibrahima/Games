@@ -65,13 +65,18 @@
               </thead>
 
               <tbody>
-                {% for use in scoresauth|dictsort:"date" %}
-                <tr>
-                  <th scope="row">{{ use.id }}</th>
-                  <td>{{ use.username }}</td>
-                  <td>{{ use.points }}</td>
-                  <td class="text-muted" style="font-size: 13px;">il ya {{ use.date|timesince }}</td>
-                </tr>
+            
+                {% for use in scores|slice:"10" %}
+                  {% ifchanged use.username %} 
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>
+                      {{ use.username }}
+                    </td>
+                    <td>{{ use.points }}</td>
+                    <td class="text-muted" style="font-size: 13px;">il ya {{ use.date|timesince }}</td>
+                  </tr>
+                  {% endifchanged %}
                 {% endfor %}
               </tbody>
 
@@ -113,10 +118,10 @@
               </thead>
 
               <tbody>
-                {% for score in scoresauth %}
+                {% for score in scores %}
                 <tr>
-                  <th scope="row">{{ use.id }}</th>
-                  <td>{{ score.user }}</td>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ score.username }}</td>
                   <td>{{ score.points }}</td>
                   <td>{{ score.date|timesince }}</td>
                 </tr>
